@@ -5,11 +5,11 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title><?php echo $Metas->setTitle(); ?></title>
-    <meta name="description" content="<?php echo $Metas->setDescription(); ?>">
+	<title><?php echo $Metas->getTitle(); ?></title>
+    <meta name="description" content="<?php echo $Metas->getDescription(); ?>">
 
-    <base href="<?php $page->getURL(); ?>">
-    <link rel="canonical" href="<?php $page->getURL(); ?>">
+    <base href="">
+    <link rel="canonical" href="">
 
     <meta name="google-site-verification" content="">
     <meta name="msvalidate.01" content=""/>
@@ -22,9 +22,9 @@
     <meta http-equiv="imagetoolbar" content="no">
     <meta http-equiv="cache-control" content="no-cache">
 
-    <link rel="stylesheet" href="<?php $page->getURL(); ?>assets/css/normalize.css">
+    <link rel="stylesheet" href="/assets/css/normalize.css">
 
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
 
 </head>
 
