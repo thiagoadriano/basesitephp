@@ -30,25 +30,71 @@ class MetasController
 
     private function setTitleDescription()
     {
+        if($this->setTitleHome()) return;
+        if($this->searchMetaPage()) return;
+        if($this->setDefault()) return;
+    }
+
+    private function setTitleHome()
+    {
+        if($this->pageAtual->getPage() == ""){
+            $this->searchMetaPage('home');
+            return true;
+        }
+    }
+
+    private function searchMetaPage($search = ""){
+        $metodo = $search != "" ? $search : $this->pageAtual->getPage();
         for($i = 0; $i < count($this->infoPages); $i++){
-            if($this->infoPages[$i]['page'] == $this->pageAtual->getPage()){
-                $this->title = $this->infoPages[$i]['title'];
-                $this->description = $this->infoPages[$i]['description'];
-                return;
-            }else if($this->pageAtual->getPage() == $this->error['page']){
-                $this->title = $this->error['title'];
-                $this->description = $this->error['description'];
-                return;
+            if($this->infoPages[$i]['page'] == $metodo){
+                if($this->title == "") {
+                    $this->setTitle($this->infoPages[$i]);
+                    $this->setDesc($this->infoPages[$i]);
+                    return true;
+                }
+            }
+            if($search == ""){
+                if($this->pageAtual->getPage() == $this->error['page']){
+                    if($this->title == ""){
+                        $this->title = $this->error['title'];
+                        $this->description = $this->error['description'];
+                        return true;
+                    }
+                }
             }
         }
+    }
+
+    private function setDefault(){
         if($this->pageAtual->getExistsFile()){
+            if($this->title == ""){
+                $this->title = $this->default['title'];
+                $this->description = $this->default['description'];
+                return true;
+            }
+        }else{
+            if($this->title == "") {
+                $this->title = $this->error['title'];
+                $this->description = $this->error['description'];
+                return true;
+            }
+        }
+    }
+
+    private function setTitle($info){
+        if($info['title'] == ""){
             $this->title = $this->default['title'];
+        }else{
+            $this->title = $info['title'];
+        }
+    }
+
+    private function setDesc($info){
+        if($info['description'] == ""){
             $this->description = $this->default['description'];
         }else{
-            $this->title = $this->error['title'];
-            $this->description = $this->error['description'];
+            $this->description = $info['description'];
         }
-
     }
 
     public function getTitle(){
